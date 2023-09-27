@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
-* Студент: [Алёна Волкова](https://up.htmlacademy.ru/univer-js1/4/user/2430625).
-* Наставник: `Геннадий Максимов`.
+- Студент: [Алёна Волкова](https://up.htmlacademy.ru/univer-js1/4/user/2430625).
+- Наставник: [Геннадий Максимов](https://htmlacademy.ru/profile/id497967).
 
 ---
 
