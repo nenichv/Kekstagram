@@ -1,8 +1,6 @@
-const checkStringLength = function(input, maxLength) {
-  return input.length <= maxLength;
-};
+const checkStringLength = (input, maxLength) => input.length <= maxLength;
 
-const checkStringPalindrome = function(input) {
+const isPalindrome = function(input) {
   const normalizeString = input.toLowerCase().replaceAll(' ', '');
   const reverseString = normalizeString.split('').reverse().join('');
 
@@ -15,8 +13,9 @@ const extractNumbers = function(input) {
 
   for (let element = 0; element < workString.length; element++) {
     const charElement = workString.at(element);
-    const isNotNumber = isNaN(parseInt(charElement, 10));
-    if (!isNotNumber) {
+    const isNumber = !(Number.isNaN(parseInt(charElement, 10)));
+
+    if (isNumber) {
       resultString += charElement;
     }
   }
@@ -25,8 +24,8 @@ const extractNumbers = function(input) {
 };
 
 checkStringLength('winx', 4);
-checkStringPalindrome('Лёша на полке клопа нашёл');
-checkStringPalindrome('winx club');
+isPalindrome('Лёша на полке клопа нашёл');
+isPalindrome('winx club');
 extractNumbers('jh ds35kj5 .90');
 extractNumbers('empty string');
 extractNumbers(12345);
