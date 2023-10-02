@@ -13,7 +13,9 @@ const extractNumbers = function(input) {
   for (let element = 0; element < workString.length; element++) {
     const charElement = workString.at(element);
     const isNotNumber = isNaN(parseInt(charElement, 10));
-    if (!isNotNumber) { resultString += charElement };
+    if (!isNotNumber) {
+      resultString += charElement;
+    }
   }
   return resultString ? +resultString : NaN;
 };
