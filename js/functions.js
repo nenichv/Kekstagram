@@ -19,3 +19,10 @@ const extractNumbers = function(input) {
   }
   return resultString ? +resultString : NaN;
 };
+
+console.log(checkStringLength('winx', 4));
+console.log(checkStringPalindrome('Лёша на полке клопа нашёл'));
+console.log(checkStringPalindrome('winx club'));
+console.log(extractNumbers('jh ds35kj5 .90'));
+console.log(extractNumbers('empty string'));
+console.log(extractNumbers(12345));
