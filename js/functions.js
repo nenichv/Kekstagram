@@ -1,8 +1,11 @@
-const checkStringLength = function(input, maxLength) { return input.length <= maxLength; };
+const checkStringLength = function(input, maxLength) {
+  return input.length <= maxLength;
+};
 
 const checkStringPalindrome = function(input) {
   const normalizeString = input.toLowerCase().replaceAll(' ', '');
   const reverseString = normalizeString.split('').reverse().join('');
+
   return normalizeString === reverseString;
 };
 
@@ -17,6 +20,7 @@ const extractNumbers = function(input) {
       resultString += charElement;
     }
   }
+
   return resultString ? +resultString : NaN;
 };
 
