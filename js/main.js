@@ -18,11 +18,11 @@ const MAX_PICTURE_COUNT = 25;
 const COUNT_AVATARS = 6;
 const LIKES_COUNT = {
   MIN: 15,
-  MAX: 200.
+  MAX: 200,
 };
 const COMMENTS_COUNT = {
   MIN: 0,
-  MAX: 30.
+  MAX: 30,
 };
 
 const getRandomInt = (a, b) => {
@@ -41,7 +41,6 @@ const createIdGenerator = () => {
 
   return () => {
     lastId += 1;
-    
     return lastId;
   };
 };
