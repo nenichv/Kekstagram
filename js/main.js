@@ -14,15 +14,22 @@ const DESCRIPTIONS = [
   'This week - HARD WORK! #team #XET_Development #project',
   'The best friends!',
 ];
-const MAX_PICTURE_COUNT = 25;
-const COUNT_AVATARS = 6;
-const LIKES_COUNT = {
+const PICTURE_COUNT = 25;
+const AvatarId = {
+  MIN: 1,
+  MAX: 6,
+};
+const LikeCount = {
   MIN: 15,
   MAX: 200,
 };
-const COMMENTS_COUNT = {
+const CommentCount = {
   MIN: 0,
   MAX: 30,
+};
+const StringCount = {
+  MIN: 1,
+  MAX: 2,
 };
 
 const getRandomInt = (a, b) => {
@@ -48,13 +55,13 @@ const createIdGenerator = () => {
 const createIdComment = createIdGenerator();
 
 const createMessage = () => Array.from(
-  { length: getRandomInt(1, 2) },
+  { length: getRandomInt(StringCount.MIN, StringCount.MAX) },
   () => getRandomArrayElement(MESSAGES),
 ).join(' ');
 
 const createComment = () => ({
   id: createIdComment(),
-  avatar: `img/avatar-${getRandomInt(1, COUNT_AVATARS)}.svg`,
+  avatar: `img/avatar-${getRandomInt(AvatarId.MIN, AvatarId.MAX)}.svg`,
   message: createMessage(),
   name: getRandomArrayElement(NAMES),
 });
@@ -63,16 +70,16 @@ const createPicture = (index) => ({
   id: index,
   url: `photos/${index}.jpg`,
   description: getRandomArrayElement(DESCRIPTIONS),
-  likes: getRandomInt(LIKES_COUNT.MIN, LIKES_COUNT.MAX),
+  likes: getRandomInt(LikeCount.MIN, LikeCount.MAX),
   comments: Array.from(
-    { length: getRandomInt(COMMENTS_COUNT.MIN, COMMENTS_COUNT.MAX) },
+    { length: getRandomInt(CommentCount.MIN, CommentCount.MAX) },
     createComment,
   ),
 });
 
 const getPictures = () => Array.from(
-  { length: MAX_PICTURE_COUNT },
-  (_item, pictureIndex) => createPicture(pictureIndex + 1),
+  { length: PICTURE_COUNT },
+  (_, pictureIndex) => createPicture(pictureIndex + 1),
 );
 
 getPictures();
