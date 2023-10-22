@@ -29,3 +29,21 @@ isPalindrome('winx club');
 extractNumbers('jh ds35kj5 .90');
 extractNumbers('empty string');
 extractNumbers(12345);
+
+function getTimeInMinutes(stringTime) {
+  const [hours, minutes] = stringTime.split(':');
+
+  return hours * 60 + Number(minutes);
+}
+
+function checkStatusMeeting(startWorkDay, endWorkDay, startMeeting, durationMeeting) {
+  const startWorkDayMinutes = getTimeInMinutes(startWorkDay);
+  const endWorkDayDayMinutes = getTimeInMinutes(endWorkDay);
+  const startMeetingMinutes = getTimeInMinutes(startMeeting);
+
+  return (
+    (startWorkDayMinutes <= startMeetingMinutes) && (endWorkDayDayMinutes >= (startMeetingMinutes + durationMeeting))
+  );
+}
+
+checkStatusMeeting('12:00', '20:00', '10:00', 60);
