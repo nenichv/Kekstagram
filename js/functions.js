@@ -30,20 +30,12 @@ extractNumbers('jh ds35kj5 .90');
 extractNumbers('empty string');
 extractNumbers(12345);
 
-function getTimeInMinutes(stringTime) {
-  const [hours, minutes] = stringTime.split(':');
-
-  return hours * 60 + Number(minutes);
+const getTimeInMinutes = (stringTime) => {
+  return stringTime.split(':')[0] * 60 + Number(stringTime.split(':')[1]);
 }
 
-function checkStatusMeeting(startWorkDay, endWorkDay, startMeeting, durationMeeting) {
-  const startWorkDayMinutes = getTimeInMinutes(startWorkDay);
-  const endWorkDayDayMinutes = getTimeInMinutes(endWorkDay);
-  const startMeetingMinutes = getTimeInMinutes(startMeeting);
+const checkStatusMeeting = (startWorkDay, endWorkDay, startMeeting, durationMeeting) => {
+    return (getTimeInMinutes(startWorkDay) <= getTimeInMinutes(startMeeting)) && (getTimeInMinutes(endWorkDay) >= (getTimeInMinutes(startMeeting) + durationMeeting));
+  };
 
-  return (
-    (startWorkDayMinutes <= startMeetingMinutes) && (endWorkDayDayMinutes >= (startMeetingMinutes + durationMeeting))
-  );
-}
-
-checkStatusMeeting('12:00', '20:00', '10:00', 60);
+  checkStatusMeeting('12:00', '20:00', '10:00', 60);
