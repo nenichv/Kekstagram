@@ -30,12 +30,8 @@ extractNumbers('jh ds35kj5 .90');
 extractNumbers('empty string');
 extractNumbers(12345);
 
-const getTimeInMinutes = (stringTime) => {
-  return stringTime.split(':')[0] * 60 + Number(stringTime.split(':')[1]);
-}
+const getTimeInMinutes = (stringTime) => stringTime.split(':')[0] * 60 + Number(stringTime.split(':')[1]);
 
-const checkStatusMeeting = (startWorkDay, endWorkDay, startMeeting, durationMeeting) => {
-    return (getTimeInMinutes(startWorkDay) <= getTimeInMinutes(startMeeting)) && (getTimeInMinutes(endWorkDay) >= (getTimeInMinutes(startMeeting) + durationMeeting));
-  };
+const checkStatusMeeting = (startWorkDay, endWorkDay, startMeeting, durationMeeting) => (getTimeInMinutes(startWorkDay) <= getTimeInMinutes(startMeeting)) && (getTimeInMinutes(endWorkDay) >= (getTimeInMinutes(startMeeting) + durationMeeting));
 
-  checkStatusMeeting('12:00', '20:00', '10:00', 60);
+checkStatusMeeting('12:00', '20:00', '10:00', 60);
