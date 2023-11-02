@@ -9,7 +9,7 @@ const createThumbnail = ( {url, description, likes, comments} ) => {
   thumbnail.querySelector('.picture__comments').textContent = comments.length;
 
   return thumbnail;
-}
+};
 
 const renderThumbnails = (pictures) =>{
   const element = document.createDocumentFragment();
@@ -20,6 +20,6 @@ const renderThumbnails = (pictures) =>{
   });
 
   childElements.append(element);
-}
+};
 
 export { renderThumbnails };
