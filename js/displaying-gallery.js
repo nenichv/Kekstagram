@@ -31,7 +31,7 @@ const renderPictureDetails = ({ url, likes, description }) => {
   fullSizePictureElement.querySelector('.big-picture__img img').alt = description;
   fullSizePictureElement.querySelector('.social__caption').textContent = description;
   fullSizePictureElement.querySelector('.likes-count').textContent = likes;
-}
+};
 
 const showFullsizePicture = (data) => {
   fullSizePictureElement.classList.remove('hidden');
@@ -41,7 +41,7 @@ const showFullsizePicture = (data) => {
 
   renderPictureDetails(data);
   renderComments(data.comments)
-}
+};
 
 const hideFullsizePicture = () => {
   fullSizePictureElement.classList.add('hidden');
@@ -54,11 +54,11 @@ function onKeydown(event) {
     event.preventDefault();
     hideFullsizePicture();
   }
-}
+};
 
 const onCancelButtonClick = () => {
   hideFullsizePicture();
-}
+};
 
 cancelButton.addEventListener('click', onCancelButtonClick);
 export { showFullsizePicture };
