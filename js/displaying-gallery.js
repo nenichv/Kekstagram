@@ -47,14 +47,14 @@ const hideFullsizePicture = () => {
   fullSizePictureElement.classList.add('hidden');
   bodyElement.classList.remove('modal-open');
   document.removeEventListener('keydown', onKeydown);
-}
+};
 
 function onKeydown(event) {
   if (event.key === 'Escape') {
     event.preventDefault();
     hideFullsizePicture();
   }
-};
+}
 
 const onCancelButtonClick = () => {
   hideFullsizePicture();
