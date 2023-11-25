@@ -3,6 +3,7 @@ const childElements = document.querySelector('.pictures');
 
 const createThumbnail = ( {id, url, description, likes, comments} ) => {
   const thumbnail = patternThumbnails.cloneNode(true);
+  
   thumbnail.dataset.thumbnailId = id;
   thumbnail.querySelector('.picture__img').src = url;
   thumbnail.querySelector('.picture__img').alt = description;
