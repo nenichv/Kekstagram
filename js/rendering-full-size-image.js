@@ -8,7 +8,9 @@ const renderGallery = (pictures) => {
     const thumbnail = event.target.closest('[data-thumbnail-id');
     const thumbnailId = parseInt(thumbnail.dataset.thumbnailId, 10);
 
-    if (!thumbnail) { return; }
+    if (!thumbnail) {
+      return;
+    }
     event.preventDefault();
 
     const picture = pictures.find( (item) =>
