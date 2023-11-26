@@ -1395,3 +1395,10 @@ main {
 .hidden {
   display: none;
 }
+
+.img-upload__field-wrapper-error {
+  color: #ffffff;
+  background-color: #58029e;
+  border-radius: 20px;
+  font-size: 15px;
+};
