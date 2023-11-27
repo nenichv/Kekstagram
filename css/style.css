@@ -1396,7 +1396,7 @@ main {
   display: none;
 }
 
-.img-upload__field-wrapper-error {
+.img-upload-error {
   color: #ffffff;
   background-color: #58029e;
   border-radius: 20px;
