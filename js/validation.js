@@ -22,14 +22,14 @@ const standardizeTag = (tag) => {
 };
 
 const isValidPatternTag = (value) => {
-  standardizeTag(value)
-  .every( (tag) =>
-  PATTERN_VALID.test(tag)
-);}
+standardizeTag(value)
+.every( (tag) =>
+PATTERN_VALID.test(tag));
+};
 
 const isValidCountTag = (value) => {
   standardizeTag(value).length <= MAX_COUNT_HASHTAG;
- }
+};
 
 const isOriginalTag = (value) => {
   const lowerCaseTags = standardizeTag(value).map((tag) => tag.lowerCaseTags());
