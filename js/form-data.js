@@ -36,7 +36,7 @@ const isValidPatternTag = (value) => {
 }
 
 const isValidCountTag = (value) => {
-  standardizeTag(value).length <= MAX_COUNT_HASHTAG;
+  standardizeTag(value).length <= MAX_COUNT_HASHTAG; //CHECK
 }
 
 const isOriginalTag = (value) => {

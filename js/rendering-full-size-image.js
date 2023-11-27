@@ -5,7 +5,7 @@ const pictureContainer = document.querySelector('.pictures');
 
 const renderGallery = (pictures) => {
   pictureContainer.addEventListener('click', (event) => {
-    const thumbnail = event.target.closest('[data-thumbnail-id');
+    const thumbnail = event.target.closest('[data-thumbnail-id]');//CHECK
     const thumbnailId = parseInt(thumbnail.dataset.thumbnailId, 10);
 
     if (!thumbnail) {
