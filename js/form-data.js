@@ -6,6 +6,11 @@ const cancelButton = formElement.querySelector('.img-upload__cancel');
 const overlayElement = formElement.querySelector('.img-upload__overlay');
 const fileInput = formElement.querySelector('.img-upload__input');
 
+const рristine = new Pristine(formElement, {
+  classTo: 'img-upload__field-wrapper',
+  errorTextParent: 'img-upload__field-wrapper',
+  errorTextClass: 'img-upload-error',
+});
 
 const showWindow = () => {
   overlayElement.classList.remove('hidden');
@@ -24,15 +29,15 @@ const hideWindow = () => {
 };
 
 function onDocumentKeydown(event) {
-  if (event.key == 'Escape') {
+  if (event.key === 'Escape') {
     event.preventDefault();
     hideWindow();
   }
-};
+}
 
 function onCancelKeydown() {
-    hideWindow();
-};
+  hideWindow();
+}
 
 fileInput.addEventListener('change', onFileInputChange);
 cancelButton.addEventListener('click', onCancelKeydown);

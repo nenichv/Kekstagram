@@ -1,7 +1,7 @@
 import './form-data.js';
 
 const MAX_COUNT_HASHTAG = 5;
-const PATTERN_VALID = "/^#[a-zа-яё0-9]{1,19}$/i";
+const PATTERN_VALID = '/^#[a-zа-яё0-9]{1,19}$/i';
 const formElement = document.querySelector('.img-upload__form');
 const hashtag = formElement.querySelector('.text__hashtags');
 const comment = formElement.querySelector('.text__description');
@@ -18,17 +18,14 @@ const рristine = new Pristine(formElement, {
 });
 
 const standardizeTag = (tag) => {
-  let tagWithoutSpace = tag.trim();
-  let tagArray = tagWithoutSpace.split('');
-  tagArray.filter( (tagFromArray) => Boolean(tagFromArray.length));
+  tag.trim().split(' ').filter( (tagFromArray) => Boolean(tagFromArray.length));
 };
 
 const isValidPatternTag = (value) => {
   standardizeTag(value)
-    .every( (tag) =>
-    PATTERN_VALID.test(tag)
-  );
-}
+  .every( (tag) =>
+  PATTERN_VALID.test(tag)
+);}
 
 const isValidCountTag = (value) => {
   standardizeTag(value).length <= MAX_COUNT_HASHTAG;
@@ -60,3 +57,4 @@ const onFormSubmit = (event) => {
 рristine.addValidator(hashtag, isValidPatternTag, Errors.PATTERN_INVALID, 2, true);
 рristine.addValidator(hashtag, isOriginalTag, Errors.UNORIGINALITY, 1, true);
 formElement.addEventListener('submit', onFormSubmit);
+
