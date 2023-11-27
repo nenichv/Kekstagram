@@ -1,10 +1,14 @@
+const PART_SHOW_COMMNENT = 5;
 const bodyElement = document.querySelector('body');
 const fullSizePictureElement = document.querySelector('.big-picture');
-const commentElement = document.querySelector('#comment').content.querySelector('.social__comment');
-const commentList = fullSizePictureElement.querySelector('.social__comments');
-const cancelButton = fullSizePictureElement.querySelector('.big-picture__cancel');
-const commentCount = fullSizePictureElement.querySelector('.social__comment-count');
-const commentLoader = fullSizePictureElement.querySelector('.comments-loader');
+const commentList = document.querySelector('.social__comments');
+const commentElement = commentList.querySelector('.social__comment');
+const cancelButton = document.querySelector('.big-picture__cancel');
+const commentFullCount = document.querySelector('.comments-count');
+const commentsShownElement = document.querySelector('.comments-shown');
+const commentLoader = document.querySelector('.comments-loader');
+let showComment = 0;
+let comments = null;
 
 const createComment = ({ avatar, name, message }) => {
   const comment = commentElement.cloneNode(true);
@@ -15,40 +19,37 @@ const createComment = ({ avatar, name, message }) => {
   return comment;
 };
 
-const renderComments = (comments) => {
+const renderComments = () => {
   commentList.innerHTML = '';
-  const activeSection = document.createDocumentFragment();
+  showComment += PART_SHOW_COMMNENT;
 
-  comments.forEach( (item) => {
-    const comment = createComment(item);
-    activeSection.append(comment);
-  });
+  if (showComment >= comments.length) {
+    showComment = comments.length;
+    commentLoader.classList.add('hidden');
+  } else {
+    commentLoader.classList.remove('hidden');
+  }
 
-  commentList.append(activeSection);
+  for (let i = 0; i < showComment; i++) {
+    const comment = createComment(comments[i]);
+    commentList.appendChild(comment);
+  }
+
+  commentsShownElement.textContent = showComment;
+  commentFullCount.textContent = comments.length;
 };
 
-const renderPictureDetails = ({ url, likes, description }) => {
-  fullSizePictureElement.querySelector('.big-picture__img img').src = url;
-  fullSizePictureElement.querySelector('.big-picture__img img').alt = description;
-  fullSizePictureElement.querySelector('.social__caption').textContent = description;
-  fullSizePictureElement.querySelector('.likes-count').textContent = likes;
-};
-
-const showFullsizePicture = (data) => {
-  fullSizePictureElement.classList.remove('hidden');
-  bodyElement.classList.add('modal-open');
-  document.addEventListener('keydown', onDocumentKeydown);
-  commentCount.classList.add('hidden');
-  commentLoader.classList.add('hidden');
-
-  renderPictureDetails(data);
-  renderComments(data.comments);
+const onCommentLoader = () => {
+  renderComments();
 };
 
 const hideFullsizePicture = () => {
   fullSizePictureElement.classList.add('hidden');
   bodyElement.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
+  cancelButton.removeEventListener('click', onCancelButtonClick);
+  commentLoader.removeEventListener('click', onCommentLoader);
+  showComment = 0;
 };
 
 function onDocumentKeydown(event) {
@@ -58,10 +59,27 @@ function onDocumentKeydown(event) {
   }
 }
 
-const onCancelButtonClick = () => {
+function onCancelButtonClick() {
   hideFullsizePicture();
 };
 
-cancelButton.addEventListener('click', onCancelButtonClick);
+const renderPictureDetails = ({ url, likes, description }) => {
+  fullSizePictureElement.querySelector('.big-picture__img img').src = url;
+  fullSizePictureElement.querySelector('.big-picture__img').alt = description;
+  fullSizePictureElement.querySelector('.social__caption').textContent = description;
+  fullSizePictureElement.querySelector('.likes-count').textContent = likes;
+};
+
+const showFullsizePicture = (data) => {
+  fullSizePictureElement.classList.remove('hidden');
+  bodyElement.classList.add('modal-open');
+  commentLoader.classList.add('hidden');
+  document.addEventListener('keydown', onDocumentKeydown);
+  cancelButton.addEventListener('click', onCancelButtonClick);
+  commentLoader.addEventListener('click', onCommentLoader);
+
+  renderPictureDetails(data);
+  renderComments(data.comments.slice());
+};
 
 export { showFullsizePicture };

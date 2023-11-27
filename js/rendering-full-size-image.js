@@ -5,7 +5,7 @@ const pictureContainer = document.querySelector('.pictures');
 
 const renderGallery = (pictures) => {
   pictureContainer.addEventListener('click', (event) => {
-    const thumbnail = event.target.closest('[data-thumbnail-id');
+    const thumbnail = event.target.closest('[data-thumbnail-id]');
     const thumbnailId = parseInt(thumbnail.dataset.thumbnailId, 10);
 
     if (!thumbnail) {
@@ -19,7 +19,7 @@ const renderGallery = (pictures) => {
     showFullsizePicture(picture);
   });
 
-  renderThumbnails(pictures, pictureContainer);
+  renderThumbnails(pictures);
 };
 
 export { renderGallery };
