@@ -5,10 +5,10 @@ const commentList = document.querySelector('.social__comments');
 const commentElement = commentList.querySelector('.social__comment');
 const cancelButton = document.querySelector('.big-picture__cancel');
 const commentFullCount = document.querySelector('.comments-count');
-const commentsShownElement = document.querySelector('.comments-shown');
+const commentsShownElement = document.querySelector('.show-comment');
 const commentLoader = document.querySelector('.comments-loader');
 let showComment = 0;
-let comments = null;
+let comments = [];
 
 const createComment = ({ avatar, name, message }) => {
   const comment = commentElement.cloneNode(true);
@@ -79,7 +79,8 @@ const showFullsizePicture = (data) => {
   commentLoader.addEventListener('click', onCommentLoader);
 
   renderPictureDetails(data);
-  renderComments(data.comments.slice());
+  comments = data.comments.slice();
+  renderComments();
 };
 
 export { showFullsizePicture };
