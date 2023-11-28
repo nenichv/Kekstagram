@@ -40,10 +40,6 @@ const renderComments = () => {
   commentFullCount.textContent = comments.length;
 };
 
-const onCancelButtonClick = () => {
-  hideFullsizePicture();
-};
-
 const onLoaderButtonClick = () => {
   renderComments();
 };
@@ -75,6 +71,10 @@ const hideFullsizePicture = () => {
   cancelButton.removeEventListener('click', onCancelButtonClick);
   commentLoader.removeEventListener('click', onLoaderButtonClick);
   showComment = 0;
+};
+
+const onCancelButtonClick = () => {
+  hideFullsizePicture();
 };
 
 function onDocumentKeydown(event) {
