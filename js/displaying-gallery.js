@@ -47,21 +47,6 @@ const renderPictureDetails = ({ url, likes, description }) => {
   fullSizePictureElement.querySelector('.likes-count').textContent = likes;
 };
 
-function onDocumentKeydown(event) {
-  if (event.key === 'Escape') {
-    event.preventDefault();
-    hideFullsizePicture();
-  }
-}
-
-const onCancelButtonClick = () => {
-  hideFullsizePicture();
-};
-
-const onLoaderButtonClick = () => {
-  renderComments();
-};
-
 const showFullsizePicture = (data) => {
   fullSizePictureElement.classList.remove('hidden');
   bodyElement.classList.add('modal-open');
@@ -82,6 +67,21 @@ const hideFullsizePicture = () => {
   cancelButton.removeEventListener('click', onCancelButtonClick);
   commentLoader.removeEventListener('click', onLoaderButtonClick);
   showComment = 0;
+};
+
+function onDocumentKeydown(event) {
+  if (event.key === 'Escape') {
+    event.preventDefault();
+    hideFullsizePicture();
+  }
+}
+
+const onCancelButtonClick = () => {
+  hideFullsizePicture();
+};
+
+const onLoaderButtonClick = () => {
+  renderComments();
 };
 
 export { showFullsizePicture };
