@@ -40,6 +40,14 @@ const renderComments = () => {
   commentFullCount.textContent = comments.length;
 };
 
+const onCancelButtonClick = () => {
+  hideFullsizePicture();
+};
+
+const onLoaderButtonClick = () => {
+  renderComments();
+};
+
 const renderPictureDetails = ({ url, likes, description }) => {
   fullSizePictureElement.querySelector('.big-picture__img img').src = url;
   fullSizePictureElement.querySelector('.big-picture__img').alt = description;
@@ -75,13 +83,5 @@ function onDocumentKeydown(event) {
     hideFullsizePicture();
   }
 }
-
-const onCancelButtonClick = () => {
-  hideFullsizePicture();
-};
-
-const onLoaderButtonClick = () => {
-  renderComments();
-};
 
 export { showFullsizePicture };
