@@ -40,7 +40,7 @@ const renderComments = () => {
   commentFullCount.textContent = comments.length;
 };
 
-const onLoaderButtonClick = () => {
+function onLoaderButtonClick() {
   renderComments();
 };
 
@@ -73,7 +73,7 @@ const hideFullsizePicture = () => {
   showComment = 0;
 };
 
-const onCancelButtonClick = () => {
+function onCancelButtonClick() {
   hideFullsizePicture();
 };
 
