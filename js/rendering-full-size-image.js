@@ -4,14 +4,13 @@ import { showFullsizePicture } from './displaying-gallery.js';
 const pictureContainer = document.querySelector('.pictures');
 
 const renderGallery = (pictures) => {
-  pictureContainer.addEventListener('click', (event) => {
-    const thumbnail = event.target.closest('[data-thumbnail-id]');
-    //const thumbnailId = parseInt(thumbnail.dataset.thumbnailId, 10);
+  pictureContainer.addEventListener('click', (evt) => {
+    const thumbnail = evt.target.closest('[data-thumbnail-id]');
 
     if (!thumbnail) {
       return;
     }
-    event.preventDefault();
+    evt.preventDefault();
 
     const picture = pictures.find( (item) =>
       item.id === parseInt(thumbnail.dataset.thumbnailId, 10)

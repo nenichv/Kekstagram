@@ -54,13 +54,21 @@ function onDocumentKeydown(event) {
   }
 }
 
+const onCancelButtonClick = () => {
+  hideFullsizePicture();
+};
+
+const onLoaderButtonClick = () => {
+  renderComments();
+};
+
 const showFullsizePicture = (data) => {
   fullSizePictureElement.classList.remove('hidden');
   bodyElement.classList.add('modal-open');
   commentLoader.classList.add('hidden');
   document.addEventListener('keydown', onDocumentKeydown);
-  cancelButton.addEventListener('click', hideFullsizePicture);
-  commentLoader.addEventListener('click', renderComments);
+  cancelButton.addEventListener('click', onCancelButtonClick);
+  commentLoader.addEventListener('click', onLoaderButtonClick);
 
   renderPictureDetails(data);
   comments = data.comments.slice();
@@ -71,8 +79,8 @@ const hideFullsizePicture = () => {
   fullSizePictureElement.classList.add('hidden');
   bodyElement.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
-  cancelButton.removeEventListener('click', hideFullsizePicture);
-  commentLoader.removeEventListener('click', renderComments);
+  cancelButton.removeEventListener('click', onCancelButtonClick);
+  commentLoader.removeEventListener('click', onLoaderButtonClick);
   showComment = 0;
 };
 
