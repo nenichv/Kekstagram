@@ -42,7 +42,7 @@ const renderComments = () => {
 
 function onLoaderButtonClick() {
   renderComments();
-};
+}
 
 const renderPictureDetails = ({ url, likes, description }) => {
   fullSizePictureElement.querySelector('.big-picture__img img').src = url;
@@ -75,7 +75,7 @@ const hideFullsizePicture = () => {
 
 function onCancelButtonClick() {
   hideFullsizePicture();
-};
+}
 
 function onDocumentKeydown(event) {
   if (event.key === 'Escape') {
