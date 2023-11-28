@@ -1,7 +1,5 @@
-import './form-data.js';
-
 const MAX_COUNT_HASHTAG = 5;
-const PATTERN_VALID = '/^#[a-zа-яё0-9]{1,19}$/i';
+const PATTERN_VALID = /^#[a-zа-яё0-9]{1,19}$/i;
 const formElement = document.querySelector('.img-upload__form');
 const hashtag = formElement.querySelector('.text__hashtags');
 const comment = formElement.querySelector('.text__description');
@@ -18,21 +16,27 @@ const рristine = new Pristine(formElement, {
 });
 
 const standardizeTag = (tag) => {
-  tag.trim().split(' ').filter( (tagFromArray) => Boolean(tagFromArray.length));
+  return tag.trim().split(' ');
 };
 
 const isValidPatternTag = (value) => {
-standardizeTag(value)
-.every( (tag) =>
-PATTERN_VALID.test(tag));
+standardizeTag(value).map((tag) => PATTERN_VALID.test(tag));
+for (let i of standardizeTag(value).map((tag) => PATTERN_VALID.test(tag))) {
+  if (!i) {
+    return false;
+  }
+}
+return true;
 };
 
+
+
 const isValidCountTag = (value) => {
-  standardizeTag(value).length <= MAX_COUNT_HASHTAG;
+  return standardizeTag(value).length <= MAX_COUNT_HASHTAG;
 };
 
 const isOriginalTag = (value) => {
-  const lowerCaseTags = standardizeTag(value).map((tag) => tag.lowerCaseTags());
+  const lowerCaseTags = standardizeTag(value).map((tag) => tag.toLowerCase());
   return lowerCaseTags.length === new Set(lowerCaseTags).size;
 };
 
