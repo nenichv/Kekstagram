@@ -25,12 +25,10 @@ const onFormSubmit = (evt) => {
   рristine.validate();
 };
 
-const standardizeTag = (tag) => {
-  return tag.trim().split(' ');
-}
+const standardizeTag = (tag) => tag.trim().split(' ');
 
 const isValidPatternTag = (value) => {
-  for (let normTag of standardizeTag(value).map(tag => PATTERN_VALID.test(tag))) {
+  for (let normTag of standardizeTag(value).map((tag) => PATTERN_VALID.test(tag))) {
     if (normTag) {
       return true;
     }
@@ -38,9 +36,7 @@ const isValidPatternTag = (value) => {
   }
 };
 
-const isValidCountTag = (value) => {
-  return standardizeTag(value).length <= MAX_COUNT_HASHTAG;
-};
+const isValidCountTag = (value) => standardizeTag(value).length <= MAX_COUNT_HASHTAG;
 
 const isOriginalTag = (value) => {
   const lowerCaseTags = standardizeTag(value).map((tag) => tag.toLowerCase());
