@@ -28,7 +28,7 @@ const onFormSubmit = (evt) => {
 const standardizeTag = (tag) => tag.trim().split(' ');
 
 const isValidPatternTag = (value) => {
-  for (let normTag of standardizeTag(value).map((tag) => PATTERN_VALID.test(tag))) {
+  for (const normTag of standardizeTag(value).map((tag) => PATTERN_VALID.test(tag))) {
     if (normTag) {
       return true;
     }
