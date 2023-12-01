@@ -23,7 +23,7 @@ const рristine = new Pristine(formElement, {
 function onFormSubmit (evt) {
   evt.preventDefault();
   рristine.validate();
-};
+}
 
 const standardizeTag = (tag) => tag.trim().split(' ');
 
@@ -92,5 +92,5 @@ export const formValidation = () => {
   formElement.addEventListener('submit', onFormSubmit);
   fileInput.addEventListener('change', onOpenModalWindow);
   cancelButton.addEventListener('click', onCancelButtonClick);
-}
+};
 
