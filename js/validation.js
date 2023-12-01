@@ -20,7 +20,7 @@ const рristine = new Pristine(formElement, {
   errorTextClass: 'img-upload-error',
 }, false);
 
-const onFormSubmit = (evt) => {
+export const onFormSubmit = (evt) => {
   evt.preventDefault();
   рristine.validate();
 };
