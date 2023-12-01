@@ -20,7 +20,7 @@ const рristine = new Pristine(formElement, {
   errorTextClass: 'img-upload-error',
 }, false);
 
-export const onFormSubmit = (evt) => {
+function onFormSubmit (evt) {
   evt.preventDefault();
   рristine.validate();
 };
@@ -88,6 +88,9 @@ hashtag.addEventListener('keydown', (evt) => {
   }
 });
 
-formElement.addEventListener('submit', onFormSubmit);
-fileInput.addEventListener('change', onOpenModalWindow);
-cancelButton.addEventListener('click', onCancelButtonClick);
+export const formValidation = () => {
+  formElement.addEventListener('submit', onFormSubmit);
+  fileInput.addEventListener('change', onOpenModalWindow);
+  cancelButton.addEventListener('click', onCancelButtonClick);
+}
+
