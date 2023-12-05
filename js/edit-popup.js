@@ -29,11 +29,11 @@ const standardizeTag = (tag) => tag.trim().split(' ');
 
 const isValidPatternTag = (value) => {
   for (const normTag of standardizeTag(value).map((tag) => PATTERN_VALID.test(tag))) {
-    if (normTag) {
-      return true;
+    if (!normTag) {
+      return false;
     }
-    return false;
   }
+  return true;
 };
 
 const isValidCountTag = (value) => standardizeTag(value).length <= MAX_COUNT_HASHTAG;
@@ -43,9 +43,9 @@ const isOriginalTag = (value) => {
   return lowerCaseTags.length === new Set(lowerCaseTags).size;
 };
 
-function initValidate() {
-  рristine.addValidator(hashtag, isValidCountTag, Error.COUNT_INVALID, 3, true);
-  рristine.addValidator(hashtag, isValidPatternTag, Error.PATTERN_INVALID, 2, true);
+const initValidate = () => {
+  рristine.addValidator(hashtag, isValidPatternTag, Error.PATTERN_INVALID, 3, true);
+  рristine.addValidator(hashtag, isValidCountTag, Error.COUNT_INVALID, 2, true);
   рristine.addValidator(hashtag, isOriginalTag, Error.UNORIGINALITY, 1, true);
 }
 
@@ -59,7 +59,7 @@ const openEditPopup = () => {
   hashtag.addEventListener('keydown', onDocumentKeydownIgnore);
 };
 
-function onFileInputChange () {
+const onFileInputChange = () => {
   openEditPopup();
   initValidate();
 }
@@ -76,18 +76,18 @@ const closeEditPopup = () => {
   hashtag.removeEventListener('keydown', onDocumentKeydownIgnore);
 };
 
-function onCloseBtnClick () {
+const onCloseBtnClick = () => {
   closeEditPopup();
 }
 
-function onDocumentKeydownClosing(evt) {
+const onDocumentKeydownClosing = (evt) => {
   if (evt.key === 'Escape') {
     evt.preventDefault();
     closeEditPopup();
   }
 }
 
-function onDocumentKeydownIgnore(evt) {
+const onDocumentKeydownIgnore = (evt) => {
   if (evt.key === 'Escape') {
     evt.stopPropagation();
   }
