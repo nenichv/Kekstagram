@@ -23,7 +23,7 @@ const рristine = new Pristine(formElement, {
 const onFormElementSubmit = (evt) => {
   evt.preventDefault();
   рristine.validate();
-}
+};
 
 const standardizeTag = (tag) => tag.trim().split(' ');
 
