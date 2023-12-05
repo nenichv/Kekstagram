@@ -1,12 +1,12 @@
+const MAX_COUNT_HASHTAG = 5;
+const PATTERN_VALID = /^#[a-zа-яё0-9]{1,19}$/i;
 const bodyElement = document.querySelector('body');
 const formElement = document.querySelector('.img-upload__form');
-const cancelButton = formElement.querySelector('.img-upload__cancel');
+const closeBtn = formElement.querySelector('.img-upload__cancel');
 const overlayElement = formElement.querySelector('.img-upload__overlay');
 const fileInput = formElement.querySelector('.img-upload__input');
 const comment = formElement.querySelector('.text__description');
 const hashtag = formElement.querySelector('.text__hashtags');
-const MAX_COUNT_HASHTAG = 5;
-const PATTERN_VALID = /^#[a-zа-яё0-9]{1,19}$/i;
 
 const Error = {
   PATTERN_INVALID: 'Неверный хэштег!',
@@ -20,7 +20,7 @@ const рristine = new Pristine(formElement, {
   errorTextClass: 'img-upload-error',
 }, false);
 
-function onFormSubmit (evt) {
+const onFormElementSubmit = (evt) => {
   evt.preventDefault();
   рristine.validate();
 }
@@ -43,54 +43,57 @@ const isOriginalTag = (value) => {
   return lowerCaseTags.length === new Set(lowerCaseTags).size;
 };
 
-рristine.addValidator(hashtag, isValidCountTag, Error.COUNT_INVALID, 3, true);
-рristine.addValidator(hashtag, isValidPatternTag, Error.PATTERN_INVALID, 2, true);
-рristine.addValidator(hashtag, isOriginalTag, Error.UNORIGINALITY, 1, true);
-
-const showWindow = () => {
-  overlayElement.classList.remove('hidden');
-  bodyElement.classList.add('modal-open');
-  document.addEventListener('keydown', onDocumentKeydown);
-};
-
-function onOpenModalWindow () {
-  showWindow();
+function initValidate() {
+  рristine.addValidator(hashtag, isValidCountTag, Error.COUNT_INVALID, 3, true);
+  рristine.addValidator(hashtag, isValidPatternTag, Error.PATTERN_INVALID, 2, true);
+  рristine.addValidator(hashtag, isOriginalTag, Error.UNORIGINALITY, 1, true);
 }
 
-const hideWindow = () => {
+const openEditPopup = () => {
+  overlayElement.classList.remove('hidden');
+  bodyElement.classList.add('modal-open');
+  document.addEventListener('keydown', onDocumentKeydownClosing);
+  formElement.addEventListener('submit', onFormElementSubmit);
+  closeBtn.addEventListener('click', onCloseBtnClick);
+  comment.addEventListener('keydown', onDocumentKeydownIgnore);
+  hashtag.addEventListener('keydown', onDocumentKeydownIgnore);
+};
+
+function onFileInputChange () {
+  openEditPopup();
+  initValidate();
+}
+
+const closeEditPopup = () => {
   formElement.reset();
   рristine.reset();
   overlayElement.classList.add('hidden');
   bodyElement.classList.remove('modal-open');
-  document.removeEventListener('keydown', onDocumentKeydown);
+  document.removeEventListener('keydown', onDocumentKeydownClosing);
+  formElement.removeEventListener('submit', onFormElementSubmit);
+  closeBtn.removeEventListener('click', onCloseBtnClick);
+  comment.removeEventListener('keydown', onDocumentKeydownIgnore);
+  hashtag.removeEventListener('keydown', onDocumentKeydownIgnore);
 };
 
-function onCancelButtonClick () {
-  hideWindow();
+function onCloseBtnClick () {
+  closeEditPopup();
 }
 
-function onDocumentKeydown(evt) {
+function onDocumentKeydownClosing(evt) {
   if (evt.key === 'Escape') {
     evt.preventDefault();
-    hideWindow();
+    closeEditPopup();
   }
 }
 
-comment.addEventListener('keydown', (evt) => {
+function onDocumentKeydownIgnore(evt) {
   if (evt.key === 'Escape') {
     evt.stopPropagation();
   }
-});
+}
 
-hashtag.addEventListener('keydown', (evt) => {
-  if (evt.key === 'Escape') {
-    evt.stopPropagation();
-  }
-});
-
-export const formValidation = () => {
-  formElement.addEventListener('submit', onFormSubmit);
-  fileInput.addEventListener('change', onOpenModalWindow);
-  cancelButton.addEventListener('click', onCancelButtonClick);
+export const initEditPopup = () => {
+  fileInput.addEventListener('change', onFileInputChange);
 };
 
