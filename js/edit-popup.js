@@ -47,7 +47,7 @@ const initValidate = () => {
   рristine.addValidator(hashtag, isValidPatternTag, Error.PATTERN_INVALID, 3, true);
   рristine.addValidator(hashtag, isValidCountTag, Error.COUNT_INVALID, 2, true);
   рristine.addValidator(hashtag, isOriginalTag, Error.UNORIGINALITY, 1, true);
-}
+};
 
 const openEditPopup = () => {
   overlayElement.classList.remove('hidden');
@@ -62,7 +62,7 @@ const openEditPopup = () => {
 const onFileInputChange = () => {
   openEditPopup();
   initValidate();
-}
+};
 
 const closeEditPopup = () => {
   formElement.reset();
@@ -76,18 +76,18 @@ const closeEditPopup = () => {
   hashtag.removeEventListener('keydown', onDocumentKeydownIgnore);
 };
 
-const onCloseBtnClick = () => {
+function onCloseBtnClick() {
   closeEditPopup();
 }
 
-const onDocumentKeydownClosing = (evt) => {
+function onDocumentKeydownClosing(evt) {
   if (evt.key === 'Escape') {
     evt.preventDefault();
     closeEditPopup();
   }
 }
 
-const onDocumentKeydownIgnore = (evt) => {
+function onDocumentKeydownIgnore(evt) {
   if (evt.key === 'Escape') {
     evt.stopPropagation();
   }
