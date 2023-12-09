@@ -146,6 +146,6 @@ const initEffect = () => {
 
 const destroyEffect = () => {
   setEffect(Effect.DEFAULT);
-}
+};
 
 export { initEffect, destroyEffect };

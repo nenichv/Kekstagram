@@ -70,8 +70,6 @@ const onFileInputChange = () => {
     initValidate();
     initScale();
     initEffect();
-  } else {
-    console.error('Можно загрузить только изображения!');
   }
 };
 
