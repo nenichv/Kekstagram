@@ -1,3 +1,6 @@
+import { destroyScale } from "./scale.js";
+import { initScale } from "./scale.js";
+
 const MAX_COUNT_HASHTAG = 5;
 const PATTERN_VALID = /^#[a-zа-яё0-9]{1,19}$/i;
 const bodyElement = document.querySelector('body');
@@ -62,6 +65,7 @@ const openEditPopup = () => {
 const onFileInputChange = () => {
   openEditPopup();
   initValidate();
+  initScale();
 };
 
 const closeEditPopup = () => {
@@ -74,6 +78,7 @@ const closeEditPopup = () => {
   closeBtn.removeEventListener('click', onCloseBtnClick);
   comment.removeEventListener('keydown', onDocumentKeydownIgnore);
   hashtag.removeEventListener('keydown', onDocumentKeydownIgnore);
+  destroyScale();
 };
 
 function onCloseBtnClick() {
