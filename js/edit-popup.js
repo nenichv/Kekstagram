@@ -1,6 +1,7 @@
 import { destroyScale } from "./scale.js";
 import { initScale } from "./scale.js";
 import { initEffect, destroyEffect } from "./effect.js";
+import { isValidTypeFile } from "./type-photo.js";
 
 const MAX_COUNT_HASHTAG = 5;
 const PATTERN_VALID = /^#[a-zа-яё0-9]{1,19}$/i;
@@ -64,10 +65,14 @@ const openEditPopup = () => {
 };
 
 const onFileInputChange = () => {
-  openEditPopup();
-  initValidate();
-  initScale();
-  initEffect();
+  if (isValidTypeFile()) {
+    openEditPopup();
+    initValidate();
+    initScale();
+    initEffect();
+  } else {
+    alert('Можно загрузить только изображения!');
+  }
 };
 
 const closeEditPopup = () => {
