@@ -1,7 +1,7 @@
-import { destroyScale } from "./scale.js";
-import { initScale } from "./scale.js";
-import { initEffect, destroyEffect } from "./effect.js";
-import { isValidTypeFile } from "./type-photo.js";
+import { destroyScale } from './scale.js';
+import { initScale } from '/scale.js';
+import { initEffect, destroyEffect } from '/effect.js';
+import { isValidTypeFile } from './type-photo.js';
 
 const MAX_COUNT_HASHTAG = 5;
 const PATTERN_VALID = /^#[a-zа-яё0-9]{1,19}$/i;
@@ -71,7 +71,7 @@ const onFileInputChange = () => {
     initScale();
     initEffect();
   } else {
-    alert('Можно загрузить только изображения!');
+    console.error('Можно загрузить только изображения!');
   }
 };
 

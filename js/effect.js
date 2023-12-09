@@ -71,9 +71,7 @@ const effectElement = modalElement.querySelector('.effects');
 const effectLevelElement = modalElement.querySelector('.effect-level__value');
 let currentEffect = Effect.DEFAULT;
 
-const isDefaultEffect = () => {
-  return currentEffect === Effect.DEFAULT;
-};
+const isDefaultEffect = () => currentEffect === Effect.DEFAULT;
 
 const setStyle = () => {
   if (isDefaultEffect()) {
@@ -92,11 +90,11 @@ const onSliderUpdate = () => {
 
 const showSlider = () => {
   sliderContainerElement.classList.remove('hidden');
-}
+};
 
 const hideSlider = () => {
   sliderContainerElement.classList.add('hidden');
-}
+};
 
 const createSlider = ({ min, max, step }) => {
   noUiSlider.create(sliderElement, {
@@ -114,6 +112,14 @@ const createSlider = ({ min, max, step }) => {
   hideSlider();
 };
 
+const updateSlider = ({ min, max, step }) => {
+  sliderElement.noUiSlider.updateOptions({
+    range: {min, max},
+    step,
+    start: max,
+  });
+};
+
 const setSlider = () => {
   if (isDefaultEffect()) {
     hideSlider();
@@ -121,14 +127,6 @@ const setSlider = () => {
     updateSlider(EffectLevelSlider[currentEffect]);
     showSlider();
   }
-};
-
-const updateSlider = ({ min, max, step }) => {
-  sliderElement.noUiSlider.updateOptions({
-    range: {min, max},
-    step,
-    start: max,
-  });
 };
 
 const setEffect = (effect) => {
@@ -139,7 +137,7 @@ const setEffect = (effect) => {
 
 const onEffectChange = (evt) => {
   setEffect(evt.target.value);
-}
+};
 
 const initEffect = () => {
   createSlider(EffectLevelSlider[currentEffect]);
