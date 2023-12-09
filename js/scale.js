@@ -4,7 +4,7 @@ const MIN_SCALE = 25;
 const STEP_SCALE = 25;
 
 const modalElement = document.querySelector('.img-upload');
-const imageElement = modalElement.querySelector('.img-upload__preview'); //+img
+const imageElement = modalElement.querySelector('.img-upload__preview img'); //+img
 const valueScale = modalElement.querySelector('.scale__control--value');
 const smallerButton = modalElement.querySelector('.scale__control--smaller');
 const biggerButton = modalElement.querySelector('.scale__control--bigger');
