@@ -1,3 +1,8 @@
+import { destroyScale } from './scale.js';
+import { initScale } from '/scale.js';
+import { initEffect, destroyEffect } from '/effect.js';
+import { isValidTypeFile } from './type-photo.js';
+
 const MAX_COUNT_HASHTAG = 5;
 const PATTERN_VALID = /^#[a-zа-яё0-9]{1,19}$/i;
 const bodyElement = document.querySelector('body');
@@ -60,8 +65,12 @@ const openEditPopup = () => {
 };
 
 const onFileInputChange = () => {
-  openEditPopup();
-  initValidate();
+  if (isValidTypeFile()) {
+    openEditPopup();
+    initValidate();
+    initScale();
+    initEffect();
+  }
 };
 
 const closeEditPopup = () => {
@@ -74,6 +83,8 @@ const closeEditPopup = () => {
   closeBtn.removeEventListener('click', onCloseBtnClick);
   comment.removeEventListener('keydown', onDocumentKeydownIgnore);
   hashtag.removeEventListener('keydown', onDocumentKeydownIgnore);
+  destroyScale();
+  destroyEffect();
 };
 
 function onCloseBtnClick() {
