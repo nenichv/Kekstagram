@@ -2,6 +2,8 @@ const ALERT_SHOW_TIME = 5000;
 const body = document.querySelector('body');
 const successMessage = body.querySelector('#success').content.querySelector('.success');
 const errorMessage = body.querySelector('#error').content.querySelector('.error');
+const successBtn = successMessage.querySelector('.success__button');
+const errorBtn = errorMessage.querySelector('.error__button');
 
 export const showAlert = (message) => {
   const alertContainer = document.createElement('div');
@@ -23,39 +25,65 @@ export const showAlert = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
-const hideMessage = () => {
-  const message = body.querySelector('.success') || body.querySelector('.error');
-  message.remove();
-  document.removeEventListener('keydown', onDocumentKeydown);
-  body.removeEventListener('click', onBodyClick);
-};
-
-const showMessage = (message, closeBtnClass) => {
-  body.append(message);
-  document.addEventListener('keydown', onDocumentKeydown);
-  body.addEventListener('click', onBodyClick);
-  message.querySelector(closeBtnClass).addEventListener('click', hideMessage);
-};
-
 export const showSuccessMessage = () => {
-  showMessage(successMessage, '.success__button');
+  document.body.append(successMessage);
+  successBtn.addEventListener('click', onSuccessButtonClick);
+  document.addEventListener('keydown', onSuccessKeydown);
+  successMessage.addEventListener('click', onSuccessClick);
+};
+
+const closeSuccessMessage = () => {
+  successMessage.remove();
+  successBtn.removeEventListener('click', onSuccessButtonClick);
+  document.removeEventListener('keydown', onSuccessKeydown);
+  successMessage.removeEventListener('click', onSuccessClick);
 };
 
 export const showErrorMessage = () => {
-  showMessage(errorMessage, '.error__button');
+  document.body.append(errorMessage);
+  errorBtn.addEventListener('click', onErrorButtonClick);
+  document.addEventListener('keydown', onErrorKeydown);
+  errorMessage.addEventListener('click', onErrorClick);
 };
 
-function onDocumentKeydown (evt) {
-  if (evt.key === 'Escape') {
-    evt.preventDefault();
-    hideMessage();
+const closeErrorMessage = () => {
+  errorMessage.remove();
+  errorBtn.removeEventListener('click', onErrorButtonClick);
+  document.removeEventListener('keydown', onErrorKeydown);
+  errorMessage.removeEventListener('click', onErrorClick);
+  showOverlay();
+};
+
+function onSuccessClick(evt) {
+  if (evt.target !== successMessage.querySelector('.success__inner') &&
+    evt.target !== successMessage.querySelector('.success__title')) {
+    closeSuccessMessage();
   }
 }
 
-function onBodyClick (evt) {
-  evt.preventDefault();
-  if (evt.target.closest('.success__inner') || evt.target.closest('.error__inner')) {
-    return;
+function onErrorClick(evt) {
+  if (evt.target !== errorMessage.querySelector('.error__inner') &&
+    evt.target !== errorMessage.querySelector('.error__title')) {
+    closeErrorMessage();
   }
-  hideMessage();
+}
+
+function onSuccessButtonClick() {
+  closeSuccessMessage();
+}
+
+function onErrorButtonClick() {
+  closeErrorMessage();
+}
+
+function onSuccessKeydown(evt) {
+  if (evt.key === 'Escape') {
+    closeSuccessMessage();
+  }
+}
+
+function onErrorKeydown(evt) {
+  if (evt.key === 'Escape') {
+    closeErrorMessage();
+  }
 }

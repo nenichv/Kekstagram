@@ -96,18 +96,21 @@ const hideSlider = () => {
   sliderContainerElement.classList.add('hidden');
 };
 
+let isExistSlider = false;
 const createSlider = ({ min, max, step }) => {
-  noUiSlider.create(sliderElement, {
-    range: { min, max },
-    step,
-    start: max,
-    connect: 'lower',
-    format: {
-      to: (value) => Number(value),
-      from: (value) => Number(value),
-    }
-  });
-
+  if (!isExistSlider) {
+    noUiSlider.create(sliderElement, {
+      range: { min, max },
+      step,
+      start: max,
+      connect: 'lower',
+      format: {
+        to: (value) => Number(value),
+        from: (value) => Number(value),
+      }
+    });
+    isExistSlider = true;
+  }
   sliderElement.noUiSlider.on('update', onSliderUpdate);
   hideSlider();
 };
@@ -146,4 +149,5 @@ export const initEffect = () => {
 
 export const destroyEffect = () => {
   setEffect(Effect.DEFAULT);
+  effectElement.removeEventListener('change', onEffectChange);
 };

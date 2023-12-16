@@ -1,5 +1,5 @@
 import { renderGallery } from './rendering-full-size-image.js';
-import { initEditPopup, setFormSubmit } from './edit-popup.js';
+import { initEditPopup } from './edit-popup.js';
 import { getData } from './api.js';
 import { showAlert } from './message.js';
 
@@ -12,5 +12,5 @@ getData()
       showAlert('Проблемы с сервером: не удалось загрузить данные. Попробуйте обновить страницу!');
     }
   );
-setFormSubmit();
+
 initEditPopup();

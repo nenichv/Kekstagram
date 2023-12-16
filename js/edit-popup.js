@@ -43,11 +43,6 @@ const allowSubmitBtn = () => {
   submitBtn.textContent = submitBtnText.IDLE;
 };
 
-const onFormElementSubmit = (evt) => {
-  evt.preventDefault();
-  рristine.validate();
-};
-
 const standardizeTag = (tag) => tag.trim().split(' ');
 
 const isValidPatternTag = (value) => {
@@ -76,10 +71,10 @@ const openEditPopup = () => {
   overlay.classList.remove('hidden');
   body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydownClosing);
-  form.addEventListener('submit', onFormElementSubmit);
   closeBtn.addEventListener('click', onCloseBtnClick);
   comment.addEventListener('keydown', onDocumentKeydownIgnore);
   hashtag.addEventListener('keydown', onDocumentKeydownIgnore);
+  form.addEventListener('submit', onFormSubmit);
 };
 
 const onFileInputChange = () => {
@@ -97,10 +92,10 @@ const closeEditPopup = () => {
   overlay.classList.add('hidden');
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydownClosing);
-  form.removeEventListener('submit', onFormElementSubmit);
   closeBtn.removeEventListener('click', onCloseBtnClick);
   comment.removeEventListener('keydown', onDocumentKeydownIgnore);
   hashtag.removeEventListener('keydown', onDocumentKeydownIgnore);
+  form.removeEventListener('submit', onFormSubmit);
   destroyScale();
   destroyEffect();
 };
@@ -122,26 +117,22 @@ function onDocumentKeydownIgnore(evt) {
   }
 }
 
-export const initEditPopup = () => {
-  fileInput.addEventListener('change', onFileInputChange);
+const onFormSubmit = (evt) => {
+  evt.preventDefault();
+  const isValid = рristine.validate();
+  if (isValid) {
+    disableSubmitBtn();
+    sendData(new FormData(evt.target))
+    .then(closeEditPopup())
+    .then(showSuccessMessage)
+    .catch(() => {
+      closeEditPopup();
+      showErrorMessage();
+    })
+    .finally(allowSubmitBtn);
+  }
 };
 
-export const setFormSubmit = () => {
-  form.addEventListener('submit', (evt) => {
-    evt.preventDefault();
-    const isValid = рristine.validate();
-
-    if (isValid) {
-      disableSubmitBtn();
-      sendData(new FormData(evt.target))
-        .then(closeEditPopup())
-        .then(showSuccessMessage)
-        .catch(() => {
-          closeEditPopup();
-          showErrorMessage();
-        }
-        )
-        .finally(allowSubmitBtn);
-    }
-  });
+export const initEditPopup = () => {
+  fileInput.addEventListener('change', onFileInputChange);
 };
