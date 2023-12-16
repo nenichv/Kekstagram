@@ -129,7 +129,7 @@ function onFormSubmit(evt) {
         closeEditPopup();
         showErrorMessage();
       })
-    .finally(allowSubmitBtn);
+      .finally(allowSubmitBtn);
   }
 }
 
