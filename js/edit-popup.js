@@ -117,21 +117,21 @@ function onDocumentKeydownIgnore(evt) {
   }
 }
 
-const onFormSubmit = (evt) => {
+function onFormSubmit(evt) {
   evt.preventDefault();
   const isValid = рristine.validate();
   if (isValid) {
     disableSubmitBtn();
     sendData(new FormData(evt.target))
-    .then(closeEditPopup())
-    .then(showSuccessMessage)
-    .catch(() => {
-      closeEditPopup();
-      showErrorMessage();
-    })
+      .then(closeEditPopup())
+      .then(showSuccessMessage)
+      .catch(() => {
+        closeEditPopup();
+        showErrorMessage();
+      })
     .finally(allowSubmitBtn);
   }
-};
+}
 
 export const initEditPopup = () => {
   fileInput.addEventListener('change', onFileInputChange);

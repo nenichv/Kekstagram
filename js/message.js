@@ -51,7 +51,6 @@ const closeErrorMessage = () => {
   errorBtn.removeEventListener('click', onErrorButtonClick);
   document.removeEventListener('keydown', onErrorKeydown);
   errorMessage.removeEventListener('click', onErrorClick);
-  showOverlay();
 };
 
 function onSuccessClick(evt) {
