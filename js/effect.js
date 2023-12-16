@@ -139,13 +139,11 @@ const onEffectChange = (evt) => {
   setEffect(evt.target.value);
 };
 
-const initEffect = () => {
+export const initEffect = () => {
   createSlider(EffectLevelSlider[currentEffect]);
   effectElement.addEventListener('change', onEffectChange);
 };
 
-const destroyEffect = () => {
+export const destroyEffect = () => {
   setEffect(Effect.DEFAULT);
 };
-
-export { initEffect, destroyEffect };
