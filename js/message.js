@@ -23,18 +23,18 @@ export const showAlert = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
-const showMessage = (message, closeBtnClass) => {
-  body.append(message);
-  document.addEventListener('keydown', onDocumentKeydown);
-  body.addEventListener('click', onBodyClick);
-  message.querySelector(closeBtnClass).addEventListener('click', hideMessage);
-};
-
 const hideMessage = () => {
   const message = body.querySelector('.success') || body.querySelector('.error');
   message.remove();
   document.removeEventListener('keydown', onDocumentKeydown);
   body.removeEventListener('click', onBodyClick);
+};
+
+const showMessage = (message, closeBtnClass) => {
+  body.append(message);
+  document.addEventListener('keydown', onDocumentKeydown);
+  body.addEventListener('click', onBodyClick);
+  message.querySelector(closeBtnClass).addEventListener('click', hideMessage);
 };
 
 export const showSuccessMessage = () => {

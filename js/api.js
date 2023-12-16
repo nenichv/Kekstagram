@@ -17,7 +17,7 @@ const Error = {
 
 const loadData = (route, errorText, method = Method.GET, body = null) =>
   fetch(`${BASE_URL}${route}`,{method, body})
-  .then((response) => {
+    .then((response) => {
       if (response.ok){
         return response.json();
       }
