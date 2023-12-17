@@ -96,18 +96,21 @@ const hideSlider = () => {
   sliderContainerElement.classList.add('hidden');
 };
 
+let isExistSlider = false;
 const createSlider = ({ min, max, step }) => {
-  noUiSlider.create(sliderElement, {
-    range: { min, max },
-    step,
-    start: max,
-    connect: 'lower',
-    format: {
-      to: (value) => Number(value),
-      from: (value) => Number(value),
-    }
-  });
-
+  if (!isExistSlider) {
+    noUiSlider.create(sliderElement, {
+      range: { min, max },
+      step,
+      start: max,
+      connect: 'lower',
+      format: {
+        to: (value) => Number(value),
+        from: (value) => Number(value),
+      }
+    });
+    isExistSlider = true;
+  }
   sliderElement.noUiSlider.on('update', onSliderUpdate);
   hideSlider();
 };
@@ -139,13 +142,12 @@ const onEffectChange = (evt) => {
   setEffect(evt.target.value);
 };
 
-const initEffect = () => {
+export const initEffect = () => {
   createSlider(EffectLevelSlider[currentEffect]);
   effectElement.addEventListener('change', onEffectChange);
 };
 
-const destroyEffect = () => {
+export const destroyEffect = () => {
   setEffect(Effect.DEFAULT);
+  effectElement.removeEventListener('change', onEffectChange);
 };
-
-export { initEffect, destroyEffect };

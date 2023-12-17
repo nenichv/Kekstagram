@@ -1,17 +1,25 @@
-import { destroyScale } from './scale.js';
-import { initScale } from '/scale.js';
-import { initEffect, destroyEffect } from '/effect.js';
+import { initScale, destroyScale } from './scale.js';
+import { initEffect, destroyEffect } from './effect.js';
 import { isValidTypeFile } from './type-photo.js';
+import { sendData } from './api.js';
+import { showSuccessMessage, showErrorMessage } from './message.js';
 
 const MAX_COUNT_HASHTAG = 5;
 const PATTERN_VALID = /^#[a-zа-яё0-9]{1,19}$/i;
-const bodyElement = document.querySelector('body');
-const formElement = document.querySelector('.img-upload__form');
-const closeBtn = formElement.querySelector('.img-upload__cancel');
-const overlayElement = formElement.querySelector('.img-upload__overlay');
-const fileInput = formElement.querySelector('.img-upload__input');
-const comment = formElement.querySelector('.text__description');
-const hashtag = formElement.querySelector('.text__hashtags');
+
+const body = document.querySelector('body');
+const form = document.querySelector('.img-upload__form');
+const closeBtn = form.querySelector('.img-upload__cancel');
+const overlay = form.querySelector('.img-upload__overlay');
+const fileInput = form.querySelector('.img-upload__input');
+const comment = form.querySelector('.text__description');
+const hashtag = form.querySelector('.text__hashtags');
+const submitBtn = body.querySelector('.img-upload__submit');
+
+const submitBtnText = {
+  IDLE: 'Опубликовать',
+  SENDING: 'Отправляю...'
+};
 
 const Error = {
   PATTERN_INVALID: 'Неверный хэштег!',
@@ -19,15 +27,20 @@ const Error = {
   COUNT_INVALID: `Максимум может быть ${MAX_COUNT_HASHTAG} хэштегов!`,
 };
 
-const рristine = new Pristine(formElement, {
+const рristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
   errorTextClass: 'img-upload-error',
 }, false);
 
-const onFormElementSubmit = (evt) => {
-  evt.preventDefault();
-  рristine.validate();
+const disableSubmitBtn = () => {
+  submitBtn.disabled = true;
+  submitBtn.textContent = submitBtnText.SENDING;
+};
+
+const allowSubmitBtn = () => {
+  submitBtn.disabled = false;
+  submitBtn.textContent = submitBtnText.IDLE;
 };
 
 const standardizeTag = (tag) => tag.trim().split(' ');
@@ -55,13 +68,13 @@ const initValidate = () => {
 };
 
 const openEditPopup = () => {
-  overlayElement.classList.remove('hidden');
-  bodyElement.classList.add('modal-open');
+  overlay.classList.remove('hidden');
+  body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydownClosing);
-  formElement.addEventListener('submit', onFormElementSubmit);
   closeBtn.addEventListener('click', onCloseBtnClick);
   comment.addEventListener('keydown', onDocumentKeydownIgnore);
   hashtag.addEventListener('keydown', onDocumentKeydownIgnore);
+  form.addEventListener('submit', onFormSubmit);
 };
 
 const onFileInputChange = () => {
@@ -74,15 +87,15 @@ const onFileInputChange = () => {
 };
 
 const closeEditPopup = () => {
-  formElement.reset();
+  form.reset();
   рristine.reset();
-  overlayElement.classList.add('hidden');
-  bodyElement.classList.remove('modal-open');
+  overlay.classList.add('hidden');
+  body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydownClosing);
-  formElement.removeEventListener('submit', onFormElementSubmit);
   closeBtn.removeEventListener('click', onCloseBtnClick);
   comment.removeEventListener('keydown', onDocumentKeydownIgnore);
   hashtag.removeEventListener('keydown', onDocumentKeydownIgnore);
+  form.removeEventListener('submit', onFormSubmit);
   destroyScale();
   destroyEffect();
 };
@@ -104,7 +117,22 @@ function onDocumentKeydownIgnore(evt) {
   }
 }
 
+function onFormSubmit(evt) {
+  evt.preventDefault();
+  const isValid = рristine.validate();
+  if (isValid) {
+    disableSubmitBtn();
+    sendData(new FormData(evt.target))
+      .then(closeEditPopup())
+      .then(showSuccessMessage)
+      .catch(() => {
+        closeEditPopup();
+        showErrorMessage();
+      })
+      .finally(allowSubmitBtn);
+  }
+}
+
 export const initEditPopup = () => {
   fileInput.addEventListener('change', onFileInputChange);
 };
-
