@@ -1,11 +1,10 @@
-import { renderGallery } from "./rendering-full-size-image.js";
+import { renderGallery } from './rendering-full-size-image.js';
 
 const MAX_COUNT_PHOTO_BOARD = 10;
 const ACTIVE_FILTER_CLASS = 'img-filters__button--active';
 const HIDDEN_FILTER_CLASS = 'img-filters--inactive';
 
 const filterContainer = document.querySelector('.img-filters');
-const filterForm = filterContainer.querySelector('.img-filters__form');
 const defaultfFilter = document.querySelector('#filter-default');
 const randomFilter = document.querySelector('#filter-random');
 const discussedFilter = document.querySelector('#filter-discussed');
