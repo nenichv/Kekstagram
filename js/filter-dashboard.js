@@ -16,7 +16,7 @@ const debounce = (callback, TIMEOUT_DELAY) => {
     clearTimeout(timeoutId);
     timeoutId = setTimeout(() => callback.apply(this, rest), TIMEOUT_DELAY);
   };
-}
+};
 
 const getRandomInteger = (first, second) => {
   const lower = Math.ceil(Math.min(first, second));
