@@ -22,18 +22,21 @@ const getRandomInteger = (first, second) => {
   const lower = Math.ceil(Math.min(first, second));
   const upper = Math.floor(Math.max(first, second));
   const result = Math.random() * (upper - lower + 1) + lower;
+
   return Math.floor(result);
 };
 
 const getRandomElementArray = (array, count) => {
   const randomIndexList = [];
   const max = Math.min(count, array.length);
+
   while (randomIndexList.length < max) {
     const index = getRandomInteger(0, array.length - 1);
     if (!randomIndexList.includes(index)) {
       randomIndexList.push(index);
     }
   }
+
   return randomIndexList.map((index) => array[index]);
 };
 
@@ -46,8 +49,19 @@ const filterMethod = {
   DISCUSSED: (miniatures) => miniatures.slice().sort(sortDiscussedPhotos),
 };
 
-const removePhotos = () => document.querySelectorAll('.picture').forEach((photo) => photo.remove());
-
+const removePhotos = () => {
+  document.querySelectorAll('.picture').forEach((photo) => photo.remove());
+  
+  defaultfFilter.removeEventListener('click', debounce(() => {
+    changePhotos(filterMethod.DEFAULT(miniatures), defaultfFilter);
+  }));
+  randomFilter.removeEventListener('click', debounce(() => {
+    changePhotos(filterMethod.RANDOM(miniatures), randomFilter);
+  }));
+  discussedFilter.removeEventListener('click', debounce(() => {
+    changePhotos(filterMethod.DISCUSSED(miniatures), discussedFilter);
+  }));
+};
 
 const changePhotos = (photos, filter) => {
   removePhotos();
