@@ -11,7 +11,7 @@ const body = document.querySelector('body');
 const form = document.querySelector('.img-upload__form');
 const closeBtn = form.querySelector('.img-upload__cancel');
 const overlay = form.querySelector('.img-upload__overlay');
-const fileChooser = form.querySelector('.img-upload__preview img');
+const imgPreview = form.querySelector('.img-upload__preview img');
 const fileInput = form.querySelector('.img-upload__start input[type=file]');
 const comment = form.querySelector('.text__description');
 const hashtag = form.querySelector('.text__hashtags');
@@ -83,10 +83,10 @@ const onFileInputChange = () => {
   const file = fileInput.files[0];
 
   if (isValidTypeFile(file)) {
-    const newPicture = URL.createObjectURL(file);
-    fileChooser.src = newPicture;
+    const newPictureURL = URL.createObjectURL(file);
+    imgPreview.src = newPictureURL;
     effectPreview.forEach((element) => {
-      element.style.backgroundImage = `url(${newPicture})`;
+      element.style.backgroundImage = `url(${newPictureURL})`;
     });
     openEditPopup();
     initValidate();
