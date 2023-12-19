@@ -7,15 +7,15 @@ let pictures = [];
 const onPictireContainerClick = (evt) => {
   const thumbnail = evt.target.closest('[data-thumbnail-id]');
 
-    if (!thumbnail) {
-      return;
-    }
-    evt.preventDefault();
+  if (!thumbnail) {
+    return;
+  }
+  evt.preventDefault();
 
-    const picture = pictures.find( (item) =>
-      item.id === parseInt(thumbnail.dataset.thumbnailId, 10)
-    );
-    showFullsizePicture(picture);
+  const picture = pictures.find( (item) =>
+    item.id === parseInt(thumbnail.dataset.thumbnailId, 10)
+  );
+  showFullsizePicture(picture);
 };
 
 const renderGallery = (currentPictures) => {

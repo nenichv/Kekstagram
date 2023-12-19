@@ -49,19 +49,7 @@ const filterMethod = {
   DISCUSSED: (miniatures) => miniatures.slice().sort(sortDiscussedPhotos),
 };
 
-const removePhotos = () => {
-  document.querySelectorAll('.picture').forEach((photo) => photo.remove());
-  
-  defaultfFilter.removeEventListener('click', debounce(() => {
-    changePhotos(filterMethod.DEFAULT(miniatures), defaultfFilter);
-  }));
-  randomFilter.removeEventListener('click', debounce(() => {
-    changePhotos(filterMethod.RANDOM(miniatures), randomFilter);
-  }));
-  discussedFilter.removeEventListener('click', debounce(() => {
-    changePhotos(filterMethod.DISCUSSED(miniatures), discussedFilter);
-  }));
-};
+const removePhotos = () => document.querySelectorAll('.picture').forEach((photo) => photo.remove());
 
 const changePhotos = (photos, filter) => {
   removePhotos();
