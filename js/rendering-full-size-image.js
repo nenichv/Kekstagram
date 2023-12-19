@@ -18,10 +18,8 @@ const onPictireContainerClick = (evt) => {
   showFullsizePicture(picture);
 };
 
-const renderGallery = (currentPictures) => {
+export const renderGallery = (currentPictures) => {
   pictures = currentPictures;
   renderThumbnails(pictures);
   pictureContainer.addEventListener('click', onPictireContainerClick);
 };
-
-export { renderGallery };

@@ -51,7 +51,7 @@ const renderPictureDetails = ({ url, likes, description }) => {
   fullSizePictureElement.querySelector('.likes-count').textContent = likes;
 };
 
-const showFullsizePicture = (data) => {
+export const showFullsizePicture = (data) => {
   fullSizePictureElement.classList.remove('hidden');
   bodyElement.classList.add('modal-open');
   commentLoader.classList.add('hidden');
@@ -83,5 +83,3 @@ function onDocumentKeydown(event) {
     hideFullsizePicture();
   }
 }
-
-export { showFullsizePicture };
