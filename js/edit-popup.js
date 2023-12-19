@@ -11,11 +11,11 @@ const body = document.querySelector('body');
 const form = document.querySelector('.img-upload__form');
 const closeBtn = form.querySelector('.img-upload__cancel');
 const overlay = form.querySelector('.img-upload__overlay');
-const fileInput = form.querySelector('.img-upload__preview img');
+const fileChooser = form.querySelector('.img-upload__preview img');
+const fileInput = form.querySelector('.img-upload__start input[type=file]');
 const comment = form.querySelector('.text__description');
 const hashtag = form.querySelector('.text__hashtags');
 const submitBtn = body.querySelector('.img-upload__submit');
-const photoChooserFile = form.querySelector('.img-upload__start input[type=file]');
 const effectPreview = form.querySelectorAll('.effects__preview');
 
 const submitBtnText = {
@@ -80,11 +80,11 @@ const openEditPopup = () => {
 };
 
 const onFileInputChange = () => {
-  const file = photoChooserFile.files[0];
+  const file = fileInput.files[0];
 
   if (isValidTypeFile(file)) {
     const newPicture = URL.createObjectURL(file);
-    fileInput.src = newPicture;
+    fileChooser.src = newPicture;
     effectPreview.forEach((element) => {
       element.style.backgroundImage = `url(${newPicture})`;
     });
@@ -143,5 +143,5 @@ function onFormSubmit(evt) {
 }
 
 export const initEditPopup = () => {
-  photoChooserFile.addEventListener('change', onFileInputChange);
+  fileInput.addEventListener('change', onFileInputChange);
 };
