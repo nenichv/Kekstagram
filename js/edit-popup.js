@@ -11,10 +11,12 @@ const body = document.querySelector('body');
 const form = document.querySelector('.img-upload__form');
 const closeBtn = form.querySelector('.img-upload__cancel');
 const overlay = form.querySelector('.img-upload__overlay');
-const fileInput = form.querySelector('.img-upload__input');
+const fileInput = form.querySelector('.img-upload__preview img');
 const comment = form.querySelector('.text__description');
 const hashtag = form.querySelector('.text__hashtags');
 const submitBtn = body.querySelector('.img-upload__submit');
+const photoChooserFile = form.querySelector('.img-upload__start input[type=file]');
+const effectPreview = form.querySelectorAll('.effects__preview');
 
 const submitBtnText = {
   IDLE: 'Опубликовать',
@@ -78,7 +80,14 @@ const openEditPopup = () => {
 };
 
 const onFileInputChange = () => {
-  if (isValidTypeFile()) {
+  const file = photoChooserFile.files[0];
+
+  if (isValidTypeFile(file)) {
+    const newPicture = URL.createObjectURL(file);
+    fileInput.src = newPicture;
+    effectPreview.forEach((element) => {
+      element.style.backgroundImage = `url(${newPicture})`;
+    });
     openEditPopup();
     initValidate();
     initScale();
@@ -134,5 +143,5 @@ function onFormSubmit(evt) {
 }
 
 export const initEditPopup = () => {
-  fileInput.addEventListener('change', onFileInputChange);
+  photoChooserFile.addEventListener('change', onFileInputChange);
 };
