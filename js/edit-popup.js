@@ -7,24 +7,26 @@ import { showSuccessMessage, showErrorMessage } from './message.js';
 const MAX_COUNT_HASHTAG = 5;
 const PATTERN_VALID = /^#[a-zа-яё0-9]{1,19}$/i;
 
-const body = document.querySelector('body');
-const form = document.querySelector('.img-upload__form');
-const closeBtn = form.querySelector('.img-upload__cancel');
-const overlay = form.querySelector('.img-upload__overlay');
-const fileInput = form.querySelector('.img-upload__input');
-const comment = form.querySelector('.text__description');
-const hashtag = form.querySelector('.text__hashtags');
-const submitBtn = body.querySelector('.img-upload__submit');
-
-const submitBtnText = {
-  IDLE: 'Опубликовать',
-  SENDING: 'Отправляю...'
-};
-
 const Error = {
   PATTERN_INVALID: 'Неверный хэштег!',
   UNORIGINALITY: 'Хэштеги не могут быть одинаковыми!',
   COUNT_INVALID: `Максимум может быть ${MAX_COUNT_HASHTAG} хэштегов!`,
+};
+
+const body = document.querySelector('body');
+const form = document.querySelector('.img-upload__form');
+const closeBtn = form.querySelector('.img-upload__cancel');
+const overlay = form.querySelector('.img-upload__overlay');
+const imgPreview = form.querySelector('.img-upload__preview img');
+const fileInput = form.querySelector('.img-upload__start input[type=file]');
+const comment = form.querySelector('.text__description');
+const hashtag = form.querySelector('.text__hashtags');
+const submitBtn = body.querySelector('.img-upload__submit');
+const effectPreview = form.querySelectorAll('.effects__preview');
+
+const submitBtnText = {
+  IDLE: 'Опубликовать',
+  SENDING: 'Отправляю...'
 };
 
 const рristine = new Pristine(form, {
@@ -46,6 +48,10 @@ const allowSubmitBtn = () => {
 const standardizeTag = (tag) => tag.trim().split(' ');
 
 const isValidPatternTag = (value) => {
+  if (value.length === 0) {
+    return true;
+  }
+
   for (const normTag of standardizeTag(value).map((tag) => PATTERN_VALID.test(tag))) {
     if (!normTag) {
       return false;
@@ -77,8 +83,20 @@ const openEditPopup = () => {
   form.addEventListener('submit', onFormSubmit);
 };
 
+export function showOverlay() {
+  overlay.classList.remove('hidden');
+  document.addEventListener('keydown', onDocumentKeydownClosing);
+}
+
 const onFileInputChange = () => {
-  if (isValidTypeFile()) {
+  const file = fileInput.files[0];
+
+  if (isValidTypeFile(file)) {
+    const newPictureURL = URL.createObjectURL(file);
+    imgPreview.src = newPictureURL;
+    effectPreview.forEach((element) => {
+      element.style.backgroundImage = `url(${newPictureURL})`;
+    });
     openEditPopup();
     initValidate();
     initScale();

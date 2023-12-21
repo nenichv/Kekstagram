@@ -69,7 +69,9 @@ const sliderElement = modalElement.querySelector('.effect-level__slider');
 const sliderContainerElement = modalElement.querySelector('.img-upload__effect-level');
 const effectElement = modalElement.querySelector('.effects');
 const effectLevelElement = modalElement.querySelector('.effect-level__value');
+
 let currentEffect = Effect.DEFAULT;
+let isExistSlider = false;
 
 const isDefaultEffect = () => currentEffect === Effect.DEFAULT;
 
@@ -96,7 +98,6 @@ const hideSlider = () => {
   sliderContainerElement.classList.add('hidden');
 };
 
-let isExistSlider = false;
 const createSlider = ({ min, max, step }) => {
   if (!isExistSlider) {
     noUiSlider.create(sliderElement, {

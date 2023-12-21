@@ -9,14 +9,14 @@ const defaultfFilter = document.querySelector('#filter-default');
 const randomFilter = document.querySelector('#filter-random');
 const discussedFilter = document.querySelector('#filter-discussed');
 
-function debounce (callback, TIMEOUT_DELAY) {
+const debounce = (callback, TIMEOUT_DELAY) => {
   let timeoutId;
 
   return (...rest) => {
     clearTimeout(timeoutId);
     timeoutId = setTimeout(() => callback.apply(this, rest), TIMEOUT_DELAY);
   };
-}
+};
 
 const getRandomInteger = (first, second) => {
   const lower = Math.ceil(Math.min(first, second));

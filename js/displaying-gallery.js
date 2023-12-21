@@ -1,12 +1,14 @@
 const PART_SHOW_COMMNENT = 5;
+
 const bodyElement = document.querySelector('body');
-const fullSizePictureElement = document.querySelector('.big-picture');
-const commentList = document.querySelector('.social__comments');
+const fullSizePictureElement = bodyElement.querySelector('.big-picture');
+const commentList = bodyElement.querySelector('.social__comments');
 const commentElement = commentList.querySelector('.social__comment');
-const cancelButton = document.querySelector('.big-picture__cancel');
-const commentFullCount = document.querySelector('.comments-count');
-const commentsShownElement = document.querySelector('.show-comment');
-const commentLoader = document.querySelector('.comments-loader');
+const cancelButton = bodyElement.querySelector('.big-picture__cancel');
+const commentFullCount = bodyElement.querySelector('.comments-count');
+const commentsShownElement = bodyElement.querySelector('.show-comment');
+const commentLoader = bodyElement.querySelector('.comments-loader');
+
 let showComment = 0;
 let comments = [];
 
@@ -51,7 +53,7 @@ const renderPictureDetails = ({ url, likes, description }) => {
   fullSizePictureElement.querySelector('.likes-count').textContent = likes;
 };
 
-const showFullsizePicture = (data) => {
+export const showFullsizePicture = (data) => {
   fullSizePictureElement.classList.remove('hidden');
   bodyElement.classList.add('modal-open');
   commentLoader.classList.add('hidden');
@@ -83,5 +85,3 @@ function onDocumentKeydown(event) {
     hideFullsizePicture();
   }
 }
-
-export { showFullsizePicture };
