@@ -1,3 +1,5 @@
+import { showOverlay } from './edit-popup.js';
+
 const ALERT_SHOW_TIME = 5000;
 const body = document.querySelector('body');
 const successMessage = body.querySelector('#success').content.querySelector('.success');
@@ -51,6 +53,7 @@ const closeErrorMessage = () => {
   errorBtn.removeEventListener('click', onErrorButtonClick);
   document.removeEventListener('keydown', onErrorKeydown);
   errorMessage.removeEventListener('click', onErrorClick);
+  showOverlay();
 };
 
 function onSuccessClick(evt) {
