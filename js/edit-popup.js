@@ -83,6 +83,11 @@ const openEditPopup = () => {
   form.addEventListener('submit', onFormSubmit);
 };
 
+export function showOverlay() {
+  overlay.classList.remove('hidden');
+  document.addEventListener('keydown', onDocumentKeydownClosing);
+}
+
 const onFileInputChange = () => {
   const file = fileInput.files[0];
 
