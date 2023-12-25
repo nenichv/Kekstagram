@@ -69,7 +69,6 @@ const sliderElement = modalElement.querySelector('.effect-level__slider');
 const sliderContainerElement = modalElement.querySelector('.img-upload__effect-level');
 const effectElement = modalElement.querySelector('.effects');
 const effectLevelElement = modalElement.querySelector('.effect-level__value');
-
 let currentEffect = Effect.DEFAULT;
 let isExistSlider = false;
 
@@ -139,16 +138,16 @@ const setEffect = (effect) => {
   setStyle();
 };
 
-const onEffectChange = (evt) => {
+const onEffectElementChange = (evt) => {
   setEffect(evt.target.value);
 };
 
 export const initEffect = () => {
   createSlider(EffectLevelSlider[currentEffect]);
-  effectElement.addEventListener('change', onEffectChange);
+  effectElement.addEventListener('change', onEffectElementChange);
 };
 
 export const destroyEffect = () => {
   setEffect(Effect.DEFAULT);
-  effectElement.removeEventListener('change', onEffectChange);
+  effectElement.removeEventListener('change', onEffectElementChange);
 };

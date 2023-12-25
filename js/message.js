@@ -1,11 +1,11 @@
 import { showOverlay } from './edit-popup.js';
 
 const ALERT_SHOW_TIME = 5000;
-const body = document.querySelector('body');
-const successMessage = body.querySelector('#success').content.querySelector('.success');
-const errorMessage = body.querySelector('#error').content.querySelector('.error');
-const successBtn = successMessage.querySelector('.success__button');
-const errorBtn = errorMessage.querySelector('.error__button');
+const bodyElement = document.querySelector('body');
+const successMessageElement = bodyElement.querySelector('#success').content.querySelector('.success');
+const errorMessageElement = bodyElement.querySelector('#error').content.querySelector('.error');
+const successBtnElement = successMessageElement.querySelector('.success__button');
+const errorBtnElement = errorMessageElement.querySelector('.error__button');
 
 export const showAlert = (message) => {
   const alertContainer = document.createElement('div');
@@ -28,49 +28,49 @@ export const showAlert = (message) => {
 };
 
 export const showSuccessMessage = () => {
-  document.body.append(successMessage);
-  successBtn.addEventListener('click', onSuccessButtonClick);
-  document.addEventListener('keydown', onSuccessKeydown);
-  successMessage.addEventListener('click', onSuccessClick);
+  document.body.append(successMessageElement);
+  successBtnElement.addEventListener('click', onSuccessBtnClick);
+  document.addEventListener('keydown', onDocumentSuccessKeydown);
+  successMessageElement.addEventListener('click', onSuccessMessageElementClick);
 };
 
 const closeSuccessMessage = () => {
-  successMessage.remove();
-  successBtn.removeEventListener('click', onSuccessButtonClick);
-  document.removeEventListener('keydown', onSuccessKeydown);
-  successMessage.removeEventListener('click', onSuccessClick);
+  successMessageElement.remove();
+  successBtnElement.removeEventListener('click', onSuccessBtnClick);
+  document.removeEventListener('keydown', onDocumentSuccessKeydown);
+  successMessageElement.removeEventListener('click', onSuccessMessageElementClick);
 };
 
 export const showErrorMessage = () => {
-  document.body.append(errorMessage);
-  errorBtn.addEventListener('click', onErrorButtonClick);
-  document.addEventListener('keydown', onErrorKeydown);
-  errorMessage.addEventListener('click', onErrorClick);
+  document.body.append(errorMessageElement);
+  errorBtnElement.addEventListener('click', onErrorButtonClick);
+  document.addEventListener('keydown', onDocumentErrorKeydown);
+  errorMessageElement.addEventListener('click', onErrorMessageElementClick);
 };
 
 const closeErrorMessage = () => {
-  errorMessage.remove();
-  errorBtn.removeEventListener('click', onErrorButtonClick);
-  document.removeEventListener('keydown', onErrorKeydown);
-  errorMessage.removeEventListener('click', onErrorClick);
+  errorMessageElement.remove();
+  errorBtnElement.removeEventListener('click', onErrorButtonClick);
+  document.removeEventListener('keydown', onDocumentErrorKeydown);
+  errorMessageElement.removeEventListener('click', onErrorMessageElementClick);
   showOverlay();
 };
 
-function onSuccessClick(evt) {
-  if (evt.target !== successMessage.querySelector('.success__inner') &&
-    evt.target !== successMessage.querySelector('.success__title')) {
+function onSuccessMessageElementClick(evt) {
+  if (evt.target !== successMessageElement.querySelector('.success__inner') &&
+    evt.target !== successMessageElement.querySelector('.success__title')) {
     closeSuccessMessage();
   }
 }
 
-function onErrorClick(evt) {
-  if (evt.target !== errorMessage.querySelector('.error__inner') &&
-    evt.target !== errorMessage.querySelector('.error__title')) {
+function onErrorMessageElementClick(evt) {
+  if (evt.target !== errorMessageElement.querySelector('.error__inner') &&
+    evt.target !== errorMessageElement.querySelector('.error__title')) {
     closeErrorMessage();
   }
 }
 
-function onSuccessButtonClick() {
+function onSuccessBtnClick() {
   closeSuccessMessage();
 }
 
@@ -78,13 +78,13 @@ function onErrorButtonClick() {
   closeErrorMessage();
 }
 
-function onSuccessKeydown(evt) {
+function onDocumentSuccessKeydown(evt) {
   if (evt.key === 'Escape') {
     closeSuccessMessage();
   }
 }
 
-function onErrorKeydown(evt) {
+function onDocumentErrorKeydown(evt) {
   if (evt.key === 'Escape') {
     closeErrorMessage();
   }

@@ -1,10 +1,10 @@
 import { renderThumbnails } from './displaying-thumbnails.js';
-import { showFullsizePicture } from './displaying-gallery.js';
+import { showFullSizePicture } from './displaying-gallery.js';
 
-const pictureContainer = document.querySelector('.pictures');
+const pictureContainerElement = document.querySelector('.pictures');
 let pictures = [];
 
-const onPictireContainerClick = (evt) => {
+const onPictureContainerElementClick = (evt) => {
   const thumbnail = evt.target.closest('[data-thumbnail-id]');
 
   if (!thumbnail) {
@@ -15,11 +15,11 @@ const onPictireContainerClick = (evt) => {
   const picture = pictures.find( (item) =>
     item.id === parseInt(thumbnail.dataset.thumbnailId, 10)
   );
-  showFullsizePicture(picture);
+  showFullSizePicture(picture);
 };
 
 export const renderGallery = (currentPictures) => {
   pictures = currentPictures;
   renderThumbnails(pictures);
-  pictureContainer.addEventListener('click', onPictireContainerClick);
+  pictureContainerElement.addEventListener('click', onPictureContainerElementClick);
 };

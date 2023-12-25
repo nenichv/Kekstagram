@@ -13,36 +13,36 @@ const Error = {
   COUNT_INVALID: `Максимум может быть ${MAX_COUNT_HASHTAG} хэштегов!`,
 };
 
-const body = document.querySelector('body');
-const form = document.querySelector('.img-upload__form');
-const closeBtn = form.querySelector('.img-upload__cancel');
-const overlay = form.querySelector('.img-upload__overlay');
-const imgPreview = form.querySelector('.img-upload__preview img');
-const fileInput = form.querySelector('.img-upload__start input[type=file]');
-const comment = form.querySelector('.text__description');
-const hashtag = form.querySelector('.text__hashtags');
-const submitBtn = body.querySelector('.img-upload__submit');
-const effectPreview = form.querySelectorAll('.effects__preview');
-
-const submitBtnText = {
+const SubmitBtnText = {
   IDLE: 'Опубликовать',
   SENDING: 'Отправляю...'
 };
 
-const рristine = new Pristine(form, {
+const bodyElement = document.querySelector('body');
+const formElement = document.querySelector('.img-upload__form');
+const closeBtnElement = formElement.querySelector('.img-upload__cancel');
+const overlayElement = formElement.querySelector('.img-upload__overlay');
+const imgPreviewElement = formElement.querySelector('.img-upload__preview img');
+const fileInputElement = formElement.querySelector('.img-upload__start input[type=file]');
+const commentElement = formElement.querySelector('.text__description');
+const hashtagElement = formElement.querySelector('.text__hashtags');
+const submitBtnElement = bodyElement.querySelector('.img-upload__submit');
+const effectsPreviewElement = formElement.querySelectorAll('.effects__preview');
+
+const рristine = new Pristine(formElement, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
   errorTextClass: 'img-upload-error',
 }, false);
 
 const disableSubmitBtn = () => {
-  submitBtn.disabled = true;
-  submitBtn.textContent = submitBtnText.SENDING;
+  submitBtnElement.disabled = true;
+  submitBtnElement.textContent = SubmitBtnText.SENDING;
 };
 
 const allowSubmitBtn = () => {
-  submitBtn.disabled = false;
-  submitBtn.textContent = submitBtnText.IDLE;
+  submitBtnElement.disabled = false;
+  submitBtnElement.textContent = SubmitBtnText.IDLE;
 };
 
 const standardizeTag = (tag) => tag.trim().split(' ');
@@ -68,33 +68,32 @@ const isOriginalTag = (value) => {
 };
 
 const initValidate = () => {
-  рristine.addValidator(hashtag, isValidPatternTag, Error.PATTERN_INVALID, 3, true);
-  рristine.addValidator(hashtag, isValidCountTag, Error.COUNT_INVALID, 2, true);
-  рristine.addValidator(hashtag, isOriginalTag, Error.UNORIGINALITY, 1, true);
+  рristine.addValidator(hashtagElement, isValidPatternTag, Error.PATTERN_INVALID, 3, true);
+  рristine.addValidator(hashtagElement, isValidCountTag, Error.COUNT_INVALID, 2, true);
+  рristine.addValidator(hashtagElement, isOriginalTag, Error.UNORIGINALITY, 1, true);
 };
 
 const openEditPopup = () => {
-  overlay.classList.remove('hidden');
-  body.classList.add('modal-open');
+  overlayElement.classList.remove('hidden');
+  bodyElement.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydownClosing);
-  closeBtn.addEventListener('click', onCloseBtnClick);
-  comment.addEventListener('keydown', onDocumentKeydownIgnore);
-  hashtag.addEventListener('keydown', onDocumentKeydownIgnore);
-  form.addEventListener('submit', onFormSubmit);
+  closeBtnElement.addEventListener('click', onCloseEditPopupClick);
+  commentElement.addEventListener('keydown', onDocumentKeydownIgnore);
+  hashtagElement.addEventListener('keydown', onDocumentKeydownIgnore);
 };
 
 export function showOverlay() {
-  overlay.classList.remove('hidden');
+  overlayElement.classList.remove('hidden');
   document.addEventListener('keydown', onDocumentKeydownClosing);
 }
 
 const onFileInputChange = () => {
-  const file = fileInput.files[0];
+  const file = fileInputElement.files[0];
 
   if (isValidTypeFile(file)) {
     const newPictureURL = URL.createObjectURL(file);
-    imgPreview.src = newPictureURL;
-    effectPreview.forEach((element) => {
+    imgPreviewElement.src = newPictureURL;
+    effectsPreviewElement.forEach((element) => {
       element.style.backgroundImage = `url(${newPictureURL})`;
     });
     openEditPopup();
@@ -104,21 +103,20 @@ const onFileInputChange = () => {
   }
 };
 
-const closeEditPopup = () => {
-  form.reset();
+export const closeEditPopup = () => {
+  formElement.reset();
   рristine.reset();
-  overlay.classList.add('hidden');
-  body.classList.remove('modal-open');
+  overlayElement.classList.add('hidden');
+  bodyElement.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydownClosing);
-  closeBtn.removeEventListener('click', onCloseBtnClick);
-  comment.removeEventListener('keydown', onDocumentKeydownIgnore);
-  hashtag.removeEventListener('keydown', onDocumentKeydownIgnore);
-  form.removeEventListener('submit', onFormSubmit);
+  closeBtnElement.removeEventListener('click', onCloseEditPopupClick);
+  commentElement.removeEventListener('keydown', onDocumentKeydownIgnore);
+  hashtagElement.removeEventListener('keydown', onDocumentKeydownIgnore);
   destroyScale();
   destroyEffect();
 };
 
-function onCloseBtnClick() {
+function onCloseEditPopupClick() {
   closeEditPopup();
 }
 
@@ -135,22 +133,24 @@ function onDocumentKeydownIgnore(evt) {
   }
 }
 
-function onFormSubmit(evt) {
-  evt.preventDefault();
-  const isValid = рristine.validate();
-  if (isValid) {
-    disableSubmitBtn();
-    sendData(new FormData(evt.target))
-      .then(closeEditPopup())
-      .then(showSuccessMessage)
-      .catch(() => {
-        closeEditPopup();
-        showErrorMessage();
-      })
-      .finally(allowSubmitBtn);
-  }
-}
+export const setFormSubmit = (actionSuccess) => {
+  formElement.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    const isValid = рristine.validate();
+    if (isValid) {
+      disableSubmitBtn();
+      sendData(new FormData(evt.target))
+        .then(actionSuccess)
+        .then(showSuccessMessage)
+        .catch(() => {
+          showErrorMessage();
+        })
+        .finally(allowSubmitBtn);
+    }
+  });
+};
+
 
 export const initEditPopup = () => {
-  fileInput.addEventListener('change', onFileInputChange);
+  fileInputElement.addEventListener('change', onFileInputChange);
 };
